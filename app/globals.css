@@ -1,33 +1,76 @@
+@import url("https://fonts.cdnfonts.com/css/josefin-sans");
+
+.btn {
+  cursor: pointer;
+  background: #663399;
+  color: white;
+  font-family: 1;
+  max-width: 18rem;
+  width: 100%;
+  padding: 0.5rem 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
-
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  color: black;
+
+  font-family: "Josefin Sans", sans-serif;
+  background: #f9f5f3;
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+  .box-selected {
+    box-shadow: inset 0px 0px 0px 2px #7d66654d;
+  }
+}
+
+html[lang="ar"] {
+  direction: rtl;
+}
+
+img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+.ql-container {
+  border-radius: 0.5rem 0.5rem 0em 0rem;
+}
+.ql-container *,
+.ql-container *::before {
+  /* direction: rtl; */
+  text-align: start;
+  font-family: inherit;
+}
+.ql-toolbar {
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  background-color: #e5e5e5cc;
+  font-family: helvetica neue, helvetica, arial, sans-serif;
+  padding: 8px;
+  border-radius: 0.5rem 0.5rem 0em 0rem;
+}
+
+.description h2 {
+  font-size: 1.5rem;
+  margin: 0.8rem 0px;
+}
+.description h1 {
+  font-size: 2rem;
+  margin: 1rem;
+}
+.description ul {
+  margin-left: 0.4rem;
+  list-style: disc;
 }
