@@ -3,7 +3,6 @@
 import { geter } from "@/utils/api";
 import { useQuery } from "@tanstack/react-query";
 import { Products } from "@/components/flatProducts";
-import { Faker } from "@/utils/faker";
 
 export default function Home() {
   let { data } = useQuery({

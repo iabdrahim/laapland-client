@@ -28,8 +28,6 @@ export default function Page() {
   });
 
   useEffect(() => {
-    console.log("create: ", open);
-    console.log("ctg: ", openCtg);
     if (!open) refetch();
     if (!openCtg) refetchCtg();
   }, [open, openCtg]);

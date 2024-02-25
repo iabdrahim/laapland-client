@@ -6,6 +6,7 @@ export class Faker {
       admin: "1100",
       _id: "DDDDD",
       brand: {
+        _id: "123",
         createdAt: "a",
         image:
           "https://doggystickers.vercel.app/_next/image?url=https%3A%2F%2Fcdn.shopify.com%2Fs%2Ffiles%2F1%2F2800%2F2014%2Fproducts%2Fmockup-295f01d2.jpg%3Fv%3D1617396766&w=1920&q=75",
@@ -14,6 +15,7 @@ export class Faker {
       },
       description: "",
       category: {
+        _id: "1234",
         arabicName: "",
         image:
           "https://doggystickers.vercel.app/_next/image?url=https%3A%2F%2Fcdn.shopify.com%2Fs%2Ffiles%2F1%2F2800%2F2014%2Fproducts%2Fmockup-295f01d2.jpg%3Fv%3D1617396766&w=1920&q=75",
@@ -33,6 +35,7 @@ export class Faker {
     {
       admin: "1100",
       brand: {
+        _id: "123",
         createdAt: "a",
         image:
           "https://doggystickers.vercel.app/_next/image?url=https%3A%2F%2Fcdn.shopify.com%2Fs%2Ffiles%2F1%2F2800%2F2014%2Fproducts%2Fmockup-295f01d2.jpg%3Fv%3D1617396766&w=1920&q=75",
@@ -41,6 +44,7 @@ export class Faker {
       },
       description: "",
       category: {
+        _id: "1234",
         arabicName: "",
         image:
           "https://doggystickers.vercel.app/_next/image?url=https%3A%2F%2Fcdn.shopify.com%2Fs%2Ffiles%2F1%2F2800%2F2014%2Fproducts%2Fmockup-295f01d2.jpg%3Fv%3D1617396766&w=1920&q=75",
@@ -61,6 +65,7 @@ export class Faker {
     {
       admin: "1100",
       brand: {
+        _id: "123",
         createdAt: "a",
         image:
           "https://doggystickers.vercel.app/_next/image?url=https%3A%2F%2Fcdn.shopify.com%2Fs%2Ffiles%2F1%2F2800%2F2014%2Fproducts%2Fmockup-295f01d2.jpg%3Fv%3D1617396766&w=1920&q=75",
@@ -69,6 +74,7 @@ export class Faker {
       },
       description: "",
       category: {
+        _id: "1234",
         arabicName: "",
         image:
           "https://doggystickers.vercel.app/_next/image?url=https%3A%2F%2Fcdn.shopify.com%2Fs%2Ffiles%2F1%2F2800%2F2014%2Fproducts%2Fmockup-295f01d2.jpg%3Fv%3D1617396766&w=1920&q=75",

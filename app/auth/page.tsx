@@ -1,6 +1,7 @@
 "use client";
 import { create, geter } from "@/utils/api";
 import { useQuery } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function Page() {
@@ -18,13 +19,9 @@ export default function Page() {
       setErrors("");
       let error = await create("auth/login", { email, password });
       if (error instanceof Error) {
-        // if (error.includes("password")) {
-
-        // }
         setErrors(error.message);
         return;
       }
-      // else r.push("/")
     }
   };
   return (
@@ -33,6 +30,11 @@ export default function Page() {
         onSubmit={handleSubmit}
         className="rounded-xl items-center max-w-sm -mt-24 w-full flex flex-col gap-4 h-full"
       >
+        {user && (
+          <span className="w-full p-2 bg-green-100 text-green-900 font-semibold border-l-2 border-green-600">
+            You are sign in as {user.email}
+          </span>
+        )}
         {errors && (
           <span className="w-full p-2 bg-red-100 text-red-700 font-semibold border-l-2 border-red-600">
             {errors}
