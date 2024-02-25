@@ -7,8 +7,8 @@ import { Brand, Ctg, Product } from "@/components/dashboard/table/brand";
 import { geter } from "@/utils/api";
 import { ICategory, IProduct } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
-
 import { useEffect, useState } from "react";
+
 export default function Page() {
   let [open, setOpen] = useState(false);
   let [openBrand, setOpenBrand] = useState(false);
