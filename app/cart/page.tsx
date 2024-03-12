@@ -125,6 +125,30 @@ export default function Page() {
               </svg>
             </div>
           </Link>
+          <a
+            className="btn bg-green-500"
+            href={`https://wa.me/212699101129?text=Hello!%20I%20want%20to%20inquire%20about%20the%20following%20items%20in%20my%20cart:%20${products
+              .map((e) => e._id + "(Quantity: " + e.quantity + ")")
+              .join(", ")}.`}
+          >
+            contact us on whatsapp
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" />
+              <path d="M8 12h.01" />
+              <path d="M12 12h.01" />
+              <path d="M16 12h.01" />
+            </svg>
+          </a>
           <div
             onClick={() => r.back()}
             className="btn text-purple-600 bg-transparent border-2 border-purple-600 font-semibold px-10"

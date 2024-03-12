@@ -1,33 +1,21 @@
 "use client";
-import { create, geter } from "@/utils/api";
+import { geter } from "@/utils/api";
+import { loginAction } from "@/utils/loginAction";
 import { useQuery } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useFormState, useFormStatus } from "react-dom";
 
 export default function Page() {
-  const [errors, setErrors] = useState("");
   let { data: user } = useQuery({
     queryKey: ["get_profile"],
     queryFn: () => geter("auth/me"),
   });
 
-  const handleSubmit = async (event: any) => {
-    event.preventDefault();
-    let email = event.target.email.value;
-    let password = event.target.password.value;
-    if (email && password) {
-      setErrors("");
-      let error = await create("auth/login", { email, password });
-      if (error instanceof Error) {
-        setErrors(error.message);
-        return;
-      }
-    }
-  };
+  const [errorMessage, dispatch] = useFormState(loginAction, undefined);
+
   return (
     <div className="w-full flex justify-center px-2 items-center min-h-screen">
       <form
-        onSubmit={handleSubmit}
+        action={dispatch}
         className="rounded-xl items-center max-w-sm -mt-24 w-full flex flex-col gap-4 h-full"
       >
         {user && (
@@ -35,11 +23,12 @@ export default function Page() {
             You are sign in as {user.email}
           </span>
         )}
-        {errors && (
+        {errorMessage && (
           <span className="w-full p-2 bg-red-100 text-red-700 font-semibold border-l-2 border-red-600">
-            {errors}
+            {errorMessage}
           </span>
         )}
+        <PendingMessage />
         <div className="flex flex-col w-full">
           <label htmlFor="" className="text-gray-600">
             Email
@@ -69,3 +58,15 @@ export default function Page() {
     </div>
   );
 }
+
+let PendingMessage = () => {
+  let { pending } = useFormStatus();
+
+  return (
+    pending && (
+      <span className="w-full p-2 bg-red-100 text-yellow-700 font-semibold border-l-2 border-yellow-600">
+        loading...
+      </span>
+    )
+  );
+};

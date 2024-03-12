@@ -3,22 +3,22 @@
 import { CreateForm } from "@/components/dashboard/create";
 import { CreateBrandForm } from "@/components/dashboard/createbrands";
 import { CreateCtgForm } from "@/components/dashboard/createctg";
-import { Brand, Ctg, Product } from "@/components/dashboard/table/brand";
+import { Brand, Ctg, Product } from "@/components/dashboard/table";
 import { geter } from "@/utils/api";
 import { ICategory, IProduct } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function Page() {
   let [open, setOpen] = useState(false);
   let [openBrand, setOpenBrand] = useState(false);
   let [openCtg, setOpenCtg] = useState(false);
 
-  let { data, refetch } = useQuery<{ products: IProduct[] }>({
+  let { data } = useQuery<{ products: IProduct[] }>({
     queryKey: ["getProducts"],
     queryFn: () => geter("products"),
   });
-  let { data: categories, refetch: refetchCtg } = useQuery<ICategory[]>({
+  let { data: categories } = useQuery<ICategory[]>({
     queryKey: ["getCategories"],
     queryFn: () => geter("categories"),
   });
@@ -27,10 +27,6 @@ export default function Page() {
     queryFn: () => geter("brands"),
   });
 
-  useEffect(() => {
-    if (!open) refetch();
-    if (!openCtg) refetchCtg();
-  }, [open, openCtg]);
   return (
     <div>
       <div className="mt-14">
@@ -46,21 +42,6 @@ export default function Page() {
             customers <span className="font-bold text-2xl">$1000</span>
           </div>
         </div>
-        <div className="latest mt-8 border border-[#ddd] p-3 w-full max-w-md">
-          <h4 className="font-semibold text-xl mb-2">Latest Orders</h4>
-          <ul>
-            <li className="flex justify-between items-center">
-              <img
-                src="https://img.clerk.com/eyJ0eXBlIjoicHJveHkiLCJzcmMiOiJodHRwczovL2ltYWdlcy5jbGVyay5kZXYvb2F1dGhfZ29vZ2xlL2ltZ18yY0RRU2xTTFZVUVNpZmlXaTU2VkxhbkZkUEQifQ?width=80"
-                className="w-10 h-10 rounded-full"
-                alt="user image"
-              />
-              User one
-              <div className="btn w-16 text-sm">Show</div>
-            </li>
-          </ul>
-        </div>
-
         {open && <CreateForm setOpen={setOpen} />}
         <section className="mt-6">
           <h3 className="text-lg mb-4">Products</h3>
@@ -161,3 +142,18 @@ export default function Page() {
     </div>
   );
 }
+
+// <div className="orders mt-8 border border-[#ddd] p-3 w-full max-w-md">
+//   <h4 className="font-semibold text-xl mb-2">Latest Orders</h4>
+//   <ul>
+//     <li className="flex justify-between items-center">
+//       <img
+//         src="https://img.clerk.com/eyJ0eXBlIjoicHJveHkiLCJzcmMiOiJodHRwczovL2ltYWdlcy5jbGVyay5kZXYvb2F1dGhfZ29vZ2xlL2ltZ18yY0RRU2xTTFZVUVNpZmlXaTU2VkxhbkZkUEQifQ?width=80"
+//         className="w-10 h-10 rounded-full"
+//         alt="user image"
+//       />
+//       User one
+//       <div className="btn w-16 text-sm">Show</div>
+//     </li>
+//   </ul>
+// </div>

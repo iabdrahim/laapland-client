@@ -70,7 +70,7 @@ img {
   font-size: 2rem;
   margin: 1rem;
 }
-.description ul {
-  margin-left: 0.4rem;
+.description li {
+  margin-left: 0.5rem;
   list-style: disc;
 }

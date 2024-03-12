@@ -1,10 +1,12 @@
 import axios, { AxiosRequestConfig } from "axios";
+import { getCookie } from "cookies-next";
 import toast from "react-hot-toast";
 
-export const API_HOST = "http://localhost:5000/";
+export const API_HOST = "https://laapland-backend.onrender.com/";
 
-// To allow setting cookies from other domains
-axios.defaults.withCredentials = true;
+axios.defaults.headers.common = {
+  Authorization: `Bearer ${getCookie("access_token")}`,
+};
 
 let showError = (message: string) => {
   toast.error(message);

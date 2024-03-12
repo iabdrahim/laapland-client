@@ -3,9 +3,12 @@
 import { useAppSelector } from "@/utils/store";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export function Nav() {
+  let [productLength, setLen] = useState(0);
   let products = useAppSelector((state) => state.products);
+  useEffect(() => setLen(products.length), [products]);
   return (
     <nav className="sticky max-md:px-3 px-[calc((100vw-80rem)/2)] h-16 border border-b-[#ddd] w-full flex justify-between items-center">
       <Link href="/auth">
@@ -38,12 +41,10 @@ export function Nav() {
           <button className="relative pb-2">
             <span
               className={`bg-purple-500 top-0 text-sm flex justify-center items-center w-5 h-5 text-center rounded-full transition-all absolute left-1/2 ${
-                products?.length == 0
-                  ? "opacity-0 scale-0"
-                  : "opacity-1 scale-1"
+                productLength == 0 ? "opacity-0 scale-0" : "opacity-1 scale-1"
               }`}
             >
-              {products?.length || "0"}
+              {productLength}
             </span>
             <svg
               xmlns="http://www.w3.org/2000/svg"

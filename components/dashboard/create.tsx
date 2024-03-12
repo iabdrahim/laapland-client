@@ -3,8 +3,12 @@
 import { create, geter, update } from "@/utils/api";
 import { IBrand, ICategory } from "@/utils/types";
 import { useQuery } from "@tanstack/react-query";
-import React, { ChangeEvent, FormEvent, useState } from "react";
-import ReactQuill from "react-quill";
+import dynamic from "next/dynamic";
+import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
+
+const ReactQuill = dynamic(() => import("react-quill"), {
+  ssr: false,
+});
 
 export function CreateForm({
   setOpen,
@@ -18,7 +22,7 @@ export function CreateForm({
     price: number;
     description: string;
     stock: number;
-    image: string;
+    image: File | string;
     images: string[];
     category: string;
     brand: string;
@@ -90,22 +94,46 @@ export function CreateForm({
     "link",
     "image",
   ];
+  useEffect(() => {
+    if (typeof formData.image != "string") {
+      var selectedFile = formData.image;
+      var reader = new FileReader();
+
+      var imgtag = document.getElementById("preview") as HTMLImageElement;
+
+      reader.onload = function (event) {
+        imgtag.src = event.target?.result as any;
+      };
+
+      reader.readAsDataURL(selectedFile);
+    }
+  }, [formData]);
 
   let createProdcut = async (e: FormEvent) => {
     e.preventDefault();
-    if (!formData.name || !formData.description || !formData.price) return null;
+    if (!formData.name || !formData.image || !formData.price) return null;
     formData.price = Number(formData.price);
     formData.stock = Number(formData.stock);
-    formData.image =
-      "https://assets.kogan.com/files/product/2023/KAL14N385PA/KAL14N385PA_hero.v3.jpg";
-    // if (!formData.category) {
-    //   formData.category =
-    //     categories && categories.length > 0 ? categories[0]._id : "";
-    // }
-    // if (!formData.brand) {
-    //   formData.brand = brands && brands.length > 0 ? brands[0]._id : "";
-    // }
-    console.log(formData.category);
+    if (!formData.category)
+      formData.category = categories ? categories[0]._id : "";
+    if (!formData.brand) formData.brand = brands ? brands[0]._id : "";
+
+    //upload image
+    if (typeof formData.image != "string") {
+      const form = new FormData();
+      form.append("file", formData.image);
+      form.append("upload_preset", "ilmamcdn");
+      let config: RequestInit = {
+        method: "POST",
+        body: form,
+      };
+      const res = await fetch(
+        "https://api.cloudinary.com/v1_1/dgvxswr30/image/upload",
+        config
+      );
+      const file = await res.json();
+      formData.image = file.secure_url;
+    }
     let req;
     if (updateId) {
       req = await update("products/" + updateId, formData);
@@ -133,14 +161,32 @@ export function CreateForm({
             {errors}
           </span>
         )}
-        <div className="">
+        <div className="flex flex-col items-start">
+          {formData.image && (
+            <img
+              id="preview"
+              src={typeof formData.image == "string" ? formData.image : ""}
+              alt=""
+              className="w-24 h-24"
+            />
+          )}
           <label className="text-lg font-medium leading-none">
             Product Image
           </label>
+
+          <input
+            type="text"
+            className="max-w-sm w-full py-2 px-2 border border-[#ddd] outline-purple7600"
+            name="image"
+            value={typeof formData.image == "string" ? formData.image : ""}
+            onChange={(e) => updateFormValue("image", e)}
+            placeholder="Mac 16"
+            required
+          />
           <div>
             <div className="flex items-center gap-4 mb-4" />
             <button
-              className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-secondary text-secondary-foreground hover:bg-secondary/80 h-10 px-4 py-2 bg-purple-100"
+              className="relative inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-secondary text-secondary-foreground hover:bg-secondary/80 h-10 px-4 py-2 bg-purple-100 "
               type="button"
             >
               <svg
@@ -162,6 +208,16 @@ export function CreateForm({
                 <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21" />
               </svg>
               Upload an Image
+              <input
+                type="file"
+                onChange={(e) =>
+                  setForm({
+                    ...formData,
+                    image: e.target.files ? e.target.files[0] : "",
+                  })
+                }
+                className="w-full h-full absolute opacity-0 left-0 top-0 cursor-pointer"
+              />
             </button>
           </div>
         </div>
@@ -198,15 +254,17 @@ export function CreateForm({
           <label htmlFor="" className="capitalize text-[#444] text-lg">
             Description
           </label>
-          <ReactQuill
-            value={formData.description}
-            onChange={(e) => updateFormValue("description", e)}
-            className="w-full max-w-xl"
-            style={{ borderRadius: "0.5rem" }}
-            placeholder="description"
-            formats={formats}
-            modules={modules}
-          />
+          {document && (
+            <ReactQuill
+              value={formData.description}
+              onChange={(e) => updateFormValue("description", e)}
+              className="w-full max-w-xl"
+              style={{ borderRadius: "0.5rem" }}
+              placeholder="description"
+              formats={formats}
+              modules={modules}
+            />
+          )}
         </div>
         <div className="flex flex-col gap-2 mt-6 w-full items-start">
           <label htmlFor="" className="capitalize text-[#444] text-lg">
