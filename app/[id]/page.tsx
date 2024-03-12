@@ -7,12 +7,6 @@ import { useRouter } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
 import { geter } from "@/utils/api";
 import { IProduct } from "@/utils/types";
-import { Metadata } from "next";
-
-export const metadata: Metadata = {
-  title: "Best laptops store in the town",
-  description: "",
-};
 
 export default function Page({ params }: { params: { id: string } }) {
   let dispcatch = useAppDispatch();
